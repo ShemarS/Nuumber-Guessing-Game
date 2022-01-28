@@ -20,41 +20,45 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         triesTextView.text = "Tries: $tries"
+        textView.text = "$correctNumber"
     }
 
     private fun generateRandom(): Int {
         return Random.nextInt(LIMIT)
     }
 
+    private fun clear() {
+        userInputTextNumber.setText("")
+
+    }
+    private fun restart() {
+        tries = 0
+        triesTextView.text = "Tries: $tries"
+        correctNumber = generateRandom()
+    }
+
     fun guess(view: View) {
+        if (userInputTextNumber.text.toString() == ""){
+            Toast.makeText(this, "Please enter a correct number!", Toast.LENGTH_SHORT).show()
+            return
+        }
         promptTextView.visibility = View.VISIBLE
-/*        userInputTextNumber.doAfterTextChanged {
-            Toast.makeText(this, "Please enter correct value!", Toast.LENGTH_SHORT).show()
-        }*/
         var guessedNumber = userInputTextNumber.text.toString().toInt()
 
-        if (userInputTextNumber.text.toString() == ""){
-            Toast.makeText(this, "Please enter correct value!", Toast.LENGTH_SHORT).show()
-        }
         if (guessedNumber == correctNumber) {
-            promptTextView.text = "Great job you won! $guessedNumber was the right number!"
+            promptTextView.text = "$guessedNumber was the right number! \n To play again, press play again!"
+            restart()
         }
         else if (guessedNumber < correctNumber) {
             promptTextView.text = "Guess higher!"
+            clear()
         }
         else if (guessedNumber > correctNumber) {
             promptTextView.text = "Guess lower!"
+            clear()
         }
         tries++
         triesTextView.text = "Tries: $tries"
     }
-
-    fun playAgain() {
-        tries = 0
-        promptTextView.visibility = View.INVISIBLE
-        promptTextView.text = ""
-        triesTextView.text = "Tries: $tries"
-    }
-
 
 }
