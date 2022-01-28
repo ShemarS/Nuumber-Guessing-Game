@@ -3,6 +3,8 @@ package com.example.numberguessinggame
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.core.widget.doAfterTextChanged
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.random.Random
 
@@ -21,18 +23,37 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun generateRandom(): Int {
-        val correctNumber = Random.nextInt(LIMIT)
-
-        return correctNumber
+        return Random.nextInt(LIMIT)
     }
 
     fun guess(view: View) {
-        var guessedNumber = userInputTextNumber.text
+        promptTextView.visibility = View.VISIBLE
+/*        userInputTextNumber.doAfterTextChanged {
+            Toast.makeText(this, "Please enter correct value!", Toast.LENGTH_SHORT).show()
+        }*/
+        var guessedNumber = userInputTextNumber.text.toString().toInt()
+
+        if (userInputTextNumber.text.toString() == ""){
+            Toast.makeText(this, "Please enter correct value!", Toast.LENGTH_SHORT).show()
+        }
+        if (guessedNumber == correctNumber) {
+            promptTextView.text = "Great job you won! $guessedNumber was the right number!"
+        }
+        else if (guessedNumber < correctNumber) {
+            promptTextView.text = "Guess higher!"
+        }
+        else if (guessedNumber > correctNumber) {
+            promptTextView.text = "Guess lower!"
+        }
         tries++
         triesTextView.text = "Tries: $tries"
+    }
 
-        textView.text = correctNumber.toString()
-
+    fun playAgain() {
+        tries = 0
+        promptTextView.visibility = View.INVISIBLE
+        promptTextView.text = ""
+        triesTextView.text = "Tries: $tries"
     }
 
 
