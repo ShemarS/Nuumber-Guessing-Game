@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         tries = 0
         triesTextView.text = "Tries: $tries"
         correctNumber = generateRandom()
+        textView.text = correctNumber.toString()
     }
 
     fun guess(view: View) {
