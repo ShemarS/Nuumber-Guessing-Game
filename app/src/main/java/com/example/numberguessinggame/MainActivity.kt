@@ -41,11 +41,12 @@ class MainActivity : AppCompatActivity() {
         tries = 0
         correctNumber = generateRandom()
         winImageView.visibility = View.INVISIBLE
+        winTextView.visibility = View.INVISIBLE
         playAgainButton.visibility = View.INVISIBLE
         promptTextView.visibility = View.INVISIBLE
         triesTextView.text = "Tries: $tries"
-        winTextView.text = correctNumber.toString()
         guessButton.text = "Guess"
+        clear()
     }
     fun initialize() {
         correctNumber = generateRandom()
